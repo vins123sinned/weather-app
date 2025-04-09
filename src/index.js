@@ -2,27 +2,41 @@ import { currentLocationData, getLocationData } from "./api.js";
 
 (function searchListener() {
     const searchInput = document.querySelector('#search');
+    const searchIcon = document.querySelector('.search-icon');
 
     searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Backspace') return;
+
         const acceptableRegExp = /^[a-zA-ZÀ-ÿ .'-]$/;
+        
+        if (event.key === 'Enter') {
+            if (searchInput.value.length === 0) return;
 
-        if (!acceptableRegExp.test(event.key)) return event.preventDefault();
-
-        console.log(event.key);
+            updateWeather(event, searchInput);
+        } else if (!acceptableRegExp.test(event.key)) {
+            event.preventDefault()
+        };
     });
 
-    searchInput.addEventListener('keyup', (event) => {
-        // keydown doesn't register enter key, but keyup will
+    searchIcon.addEventListener('click', (event) => {
         if (searchInput.value.length === 0) return;
-        if (event.key === 'Enter') {
-            const pruneRegExp = /([ .'-])\1+/g;
-            const invalidRegExp = /[^a-zA-ZÀ-ÿ .'-]/g;
 
-            const value = searchInput.value.replace(pruneRegExp, '$1').replace(invalidRegExp, '');
-        }
+        updateWeather(event, searchInput);
     });
 })();
 
-getLocationData('las-vegas').then(() => {
-    console.log(currentLocationData);
-});
+async function updateWeather(event, searchInput) {
+    event.preventDefault();
+    
+    const pruneRegExp = /([ .'-])\1+/g;
+    const invalidRegExp = /[^a-zA-ZÀ-ÿ .'-]/g;
+
+    const location = searchInput.value.replace(pruneRegExp, '$1').replace(invalidRegExp, '');
+
+    try {
+        await getLocationData(location);
+        console.log(currentLocationData);
+    } catch (error) {
+        console.log('Error: ' + error);
+    }
+}
