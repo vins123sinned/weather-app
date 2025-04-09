@@ -1,3 +1,3 @@
-import { getLocation } from "./api.js";
+import { getLocationData } from "./api.js";
 
-getLocation('las-vegas');
+getLocationData('las-vegas');
