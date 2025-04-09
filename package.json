@@ -25,8 +25,12 @@
   },
   "homepage": "https://github.com/vins123sinned/template-repository#readme",
   "devDependencies": {
+    "@eslint/js": "^9.24.0",
     "css-loader": "^7.1.2",
+    "eslint": "^9.24.0",
+    "globals": "^16.0.0",
     "html-webpack-plugin": "^5.6.3",
+    "prettier": "3.5.3",
     "style-loader": "^4.0.0",
     "webpack": "^5.99.2",
     "webpack-cli": "^6.0.1",
