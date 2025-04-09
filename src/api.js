@@ -1,20 +1,17 @@
 export let currentLocationData;
 
-export function getLocationData(location) {
-    return fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/next7days?key=G5YF7NL3UB3T5NVFAGGZH9GMN`, {mode: 'cors'})
-    .then((response) => {
-        return response.json();
-    })
-    .then((response) => {
-        setLocationData(response);
-    });
+export async function getLocationData(location) {
+    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/next7days?key=G5YF7NL3UB3T5NVFAGGZH9GMN`, {mode: 'cors'});
+    const locationData = await response.json();
+    
+    setLocationData(locationData);
 }
 
-function setLocationData(response) {
+function setLocationData(location) {
     const days = [];
-    // Since response.days include the first day which we don't want
+    // Since location.days include the first day which we don't want
     // we slice it to remove it from our loop
-    for (const day of response.days.slice(1)) {
+    for (const day of location.days.slice(1)) {
         days.push({
             date: day.datetime,
             conditions: day.conditions,
@@ -25,11 +22,11 @@ function setLocationData(response) {
 
     currentLocationData = {
         currentDay: {
-            date: response.days[0].datetime,
-            resolvedAddress: response.resolvedAddress,
-            conditions: response.currentConditions.conditions,
-            datetime: response.currentConditions.datetime,
-            temp: response.currentConditions.temp,
+            date: location.days[0].datetime,
+            resolvedAddress: location.resolvedAddress,
+            conditions: location.currentConditions.conditions,
+            datetime: location.currentConditions.datetime,
+            temp: location.currentConditions.temp,
         },
         forecast: days,
     };
