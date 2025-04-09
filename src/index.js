@@ -1,3 +1,5 @@
-import { getLocationData } from "./api.js";
+import { currentLocationData, getLocationData } from "./api.js";
 
-getLocationData('las-vegas');
+getLocationData('las-vegas').then(() => {
+    console.log(currentLocationData);
+});
