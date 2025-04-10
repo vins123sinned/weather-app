@@ -11,6 +11,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 3rem;
     margin: 0.5rem 2rem
 }
 
@@ -67,8 +68,18 @@ header {
     align-items: center;
 }
 
-.temperature-mode p {
+.fahrenheit,
+.celsius {
+    font-size: 0.8rem;
+    color: #ccc;
+    transition: 0.4s;
+}
+
+.current-mode {
+    font-size: 1.25rem;
     font-weight: 800;
+    color: #000;
+    transition: 0.4s;
 }
 
 .switch {

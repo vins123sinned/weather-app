@@ -1,6 +1,7 @@
 import './switch.css';
 import './styles.css';
 import { currentLocationData, getLocationData } from "./api.js";
+import './dom.js';
 
 (function searchListener() {
     const searchInput = document.querySelector('#search');
