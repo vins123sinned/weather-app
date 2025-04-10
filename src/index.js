@@ -1,3 +1,5 @@
+import './switch.css';
+import './styles.css';
 import { currentLocationData, getLocationData } from "./api.js";
 
 (function searchListener() {

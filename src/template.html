@@ -7,26 +7,27 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=routine,search" />
 </head>
 <body>
-    <h1 class="website-logo">
-        <span class="material-symbols-outlined">
-            routine
-        </span>
-        WeatherApp
-    </h1>
     <header>
+        <h1 class="website-logo">
+            <span class="material-symbols-outlined">
+                routine
+            </span>
+            WeatherApp
+        </h1>
         <form>
-            <div>
-                <label for="search">Search</label>
-                <input type="text" id="search" name="search">
+            <div class="search-container">
+                <label for="search" class="search-label">Search</label>
+                <input type="text" id="search" name="search" class="search-input">
                 <span class="material-symbols-outlined search-icon"> search </span>
             </div>
         </form>
         <div class="temperature-mode">
-            <p class="temperature-text">Temperature</p>
+            <p class="fahrenheit">Fahrenheit</p>
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider round"></span>
             </label>
+            <p class="celsius">Celsius</p>
         </div>
     </header>
 </body>
