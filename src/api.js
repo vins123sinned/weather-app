@@ -18,6 +18,7 @@ export async function setLocationData(locationName) {
     for (const day of location.days.slice(1)) {
         days.push({
             date: day.datetime,
+            icon: day.icon,
             conditions: day.conditions,
             tempmax: day.tempmax,
             tempmin: day.tempmin,
@@ -30,6 +31,7 @@ export async function setLocationData(locationName) {
             currentDay: {
                 date: location.days[0].datetime,
                 resolvedAddress: location.resolvedAddress,
+                icon: location.currentConditions.icon,
                 conditions: location.currentConditions.conditions,
                 datetime: location.currentConditions.datetime,
                 temp: location.currentConditions.temp,
@@ -43,6 +45,6 @@ export async function setLocationData(locationName) {
 
 function setLocationVar() {
     const data = localStorage.getItem('locationData');
-    locationData = data;
+    locationData = JSON.parse(data);
 }
 

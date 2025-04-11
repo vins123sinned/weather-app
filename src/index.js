@@ -1,7 +1,8 @@
 import './switch.css';
 import './styles.css';
 import './switch.js';
-import { locationData, setLocationData } from "./api.js";
+import { setLocationData } from "./api.js";
+import { showInitialLocation } from './dom.js';
 
 (function searchListener() {
     const searchInput = document.querySelector('#search');
@@ -38,8 +39,9 @@ async function updateWeather(event, searchInput) {
 
     try {
         await setLocationData(locationName);
-        console.log(locationData);
     } catch (error) {
         console.log('Error: ' + error);
     }
 }
+
+showInitialLocation();
