@@ -1,5 +1,5 @@
-import './switch.css';
 import './styles.css';
+import './header.css';
 import './switch.js';
 import { setLocationData } from "./api.js";
 import { createLoadingElement, displayLocationData, removeLoadingElement } from './dom.js';
@@ -39,7 +39,7 @@ async function updateWeather(event, searchInput) {
 
     try {
         createLoadingElement();
-        
+
         await setLocationData(locationName);
         displayLocationData();
 

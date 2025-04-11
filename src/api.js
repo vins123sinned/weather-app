@@ -8,6 +8,8 @@ export let locationData;
     setLocationVar();
 })();
 
+//fix name (e.g jeju city)
+
 export async function setLocationData(locationName) {
     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${locationName}/next7days?key=G5YF7NL3UB3T5NVFAGGZH9GMN`, {mode: 'cors'});
     const location = await response.json();

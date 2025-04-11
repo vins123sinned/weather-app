@@ -1,3 +1,4 @@
+import './switch.css';
 import { changeTemperatureText } from "./dom";
 
 (function checkTemperatureMode() {
