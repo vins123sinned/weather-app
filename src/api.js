@@ -1,14 +1,18 @@
-export let currentLocationData;
+export let locationData;
 
-export async function getLocationData(location) {
-    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/next7days?key=G5YF7NL3UB3T5NVFAGGZH9GMN`, {mode: 'cors'});
-    const locationData = await response.json();
+(function initalizeLocationData() {
+    const data = localStorage.getItem('locationData');
     
-    setLocationData(locationData);
-}
+    if (!data) return setLocationData('las-vegas');
 
-function setLocationData(location) {
+    setLocationVar();
+})();
+
+export async function setLocationData(locationName) {
+    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${locationName}/next7days?key=G5YF7NL3UB3T5NVFAGGZH9GMN`, {mode: 'cors'});
+    const location = await response.json();
     const days = [];
+
     // Since location.days include the first day which we don't want
     // we slice it to remove it from our loop
     for (const day of location.days.slice(1)) {
@@ -20,14 +24,25 @@ function setLocationData(location) {
         });
     }
 
-    currentLocationData = {
-        currentDay: {
-            date: location.days[0].datetime,
-            resolvedAddress: location.resolvedAddress,
-            conditions: location.currentConditions.conditions,
-            datetime: location.currentConditions.datetime,
-            temp: location.currentConditions.temp,
-        },
-        forecast: days,
-    };
+    localStorage.setItem(
+        'locationData', 
+        JSON.stringify({
+            currentDay: {
+                date: location.days[0].datetime,
+                resolvedAddress: location.resolvedAddress,
+                conditions: location.currentConditions.conditions,
+                datetime: location.currentConditions.datetime,
+                temp: location.currentConditions.temp,
+            },
+            forecast: days,
+        })
+    );
+    
+    setLocationVar();
 }
+
+function setLocationVar() {
+    const data = localStorage.getItem('locationData');
+    locationData = data;
+}
+

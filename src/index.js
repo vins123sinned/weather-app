@@ -1,7 +1,7 @@
 import './switch.css';
 import './styles.css';
-import { currentLocationData, getLocationData } from "./api.js";
-import './dom.js';
+import './switch.js';
+import { locationData, setLocationData } from "./api.js";
 
 (function searchListener() {
     const searchInput = document.querySelector('#search');
@@ -34,11 +34,11 @@ async function updateWeather(event, searchInput) {
     const pruneRegExp = /([ .'-])\1+/g;
     const invalidRegExp = /[^a-zA-ZÀ-ÿ .'-]/g;
 
-    const location = searchInput.value.replace(pruneRegExp, '$1').replace(invalidRegExp, '');
+    const locationName = searchInput.value.replace(pruneRegExp, '$1').replace(invalidRegExp, '');
 
     try {
-        await getLocationData(location);
-        console.log(currentLocationData);
+        await setLocationData(locationName);
+        console.log(locationData);
     } catch (error) {
         console.log('Error: ' + error);
     }
