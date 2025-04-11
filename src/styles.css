@@ -31,7 +31,7 @@ header {
     border: 1px solid #000;
     border-radius: 15px;
     width: clamp(250px, 30vw, 500px);
-    padding: 0 1rem;
+    padding: 0.1rem 1rem;
 }
 
 .search-container:has(.search-input:focus) {
@@ -78,6 +78,20 @@ header {
 
 .invalid + .search-icon {
     color: #c1121f;
+}
+
+.loader {
+    border: 0.25rem solid #f3f3f3;
+    border-top: 0.25rem solid #0077b6;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .temperature-mode {

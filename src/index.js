@@ -2,7 +2,7 @@ import './switch.css';
 import './styles.css';
 import './switch.js';
 import { setLocationData } from "./api.js";
-import { displayLocationData } from './dom.js';
+import { createLoadingElement, displayLocationData, removeLoadingElement } from './dom.js';
 
 (function searchListener() {
     const searchInput = document.querySelector('#search');
@@ -38,6 +38,8 @@ async function updateWeather(event, searchInput) {
     const locationName = searchInput.value.replace(pruneRegExp, '$1').replace(invalidRegExp, '');
 
     try {
+        createLoadingElement();
+        
         await setLocationData(locationName);
         displayLocationData();
 
@@ -45,6 +47,8 @@ async function updateWeather(event, searchInput) {
     } catch (error) {
         showSearchError(searchInput);
         console.log('Error: ' + error);
+    } finally {
+        removeLoadingElement();
     }
 }
 

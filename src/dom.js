@@ -98,3 +98,20 @@ export function changeTemperatureText() {
         minTemp.textContent = formatTemperature(day.minTemp);
     }
 }
+
+export function createLoadingElement() {
+    const searchIcon = document.querySelector('.search-icon');
+    const loadingElement = document.createElement('div');
+
+    loadingElement.classList.add('loader');
+    searchIcon.replaceWith(loadingElement);
+}
+
+export function removeLoadingElement() {
+    const searchIcon = document.createElement('span');
+    const loadingElement = document.querySelector('.loader');
+
+    searchIcon.classList.add('material-symbols-outlined', 'search-icon');
+    searchIcon.textContent = 'search';
+    loadingElement.replaceWith(searchIcon);
+}
