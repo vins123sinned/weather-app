@@ -33,11 +33,11 @@ function populateOverview() {
 
     city.textContent = splitLocation[0];
     country.textContent = splitLocation[splitLocation.length - 1];
-    currentTemperature.textContent = `${locationData.currentDay.temp}° ${locationData.currentDay.conditions}`;
+    currentTemperature.textContent = `${formatTemperature(locationData.currentDay.temp)} ${locationData.currentDay.conditions}`;
 }
 
 function populateForecast() {
-    const forecastContainer = document.querySelector('.forecast-container');
+    const forecastContainer = document.querySelector('.forecast');
     
     for (const day of locationData.forecast) {
         const dayContainer = document.createElement('div');
@@ -47,10 +47,12 @@ function populateForecast() {
         const maxTemp = document.createElement('p');
         const minTemp = document.createElement('p');
 
+        dayContainer.dataset.date = day.date;
         dayContainer.classList.add('day-container');
         dayHeading.classList.add('day-heading');
         dayIcon.classList.add('day-icon');
         temperatureContainer.classList.add('day-temperatures');
+        maxTemp.classList.add('max-temp');
         minTemp.classList.add('min-temp');
 
         const formatDay = format(parseISO(day.date), 'cccc');
@@ -58,8 +60,8 @@ function populateForecast() {
 
         setWeatherIcon(dayIcon, day.icon);
         
-        maxTemp.textContent = `${day.maxTemp}°`;
-        minTemp.textContent = `${day.minTemp}°`;
+        maxTemp.textContent = formatTemperature(day.maxTemp);
+        minTemp.textContent = formatTemperature(day.minTemp);
 
         temperatureContainer.appendChild(maxTemp);
         temperatureContainer.appendChild(minTemp);
@@ -70,5 +72,29 @@ function populateForecast() {
     }
 }
 
-// do switching between F and C next!
+function formatTemperature(temperature) {
+    if (localStorage.getItem('temperatureMode') === 'Celsius') {
+        const celsius = (temperature - 32) * 5/9;
+        return `${Math.round(celsius)}°`;
+    } else {
+        return `${Math.round(temperature)}°`;
+    }
+}
+
+export function changeTemperatureText() {
+    const currentTemperature = document.querySelector('.current-temperature');
+    const dayTemperatures = document.querySelectorAll('.day-temperature');
+    
+    currentTemperature.textContent = `${formatTemperature(locationData.currentDay.temp)} ${locationData.currentDay.conditions}`;
+    for (const day of locationData.forecast) {
+        const dayContainer = document.querySelector(`[data-date='${day.date}']`);
+        const maxTemp = dayContainer.querySelector('.max-temp');
+        const minTemp = dayContainer.querySelector('.min-temp');
+
+        maxTemp.textContent = formatTemperature(day.maxTemp);
+        minTemp.textContent = formatTemperature(day.minTemp);
+    }
+}
+
+// don't forget to refresh when getting new location!
 // could also do refresh button (refreshing in general);

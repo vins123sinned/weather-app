@@ -1,6 +1,6 @@
 export let locationData;
 
-(function initalizeLocationData() {
+(function initializeLocationData() {
     const data = localStorage.getItem('locationData');
     
     if (!data) return setLocationData('las-vegas');

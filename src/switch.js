@@ -1,3 +1,5 @@
+import { changeTemperatureText } from "./dom";
+
 (function checkTemperatureMode() {
     const mode = localStorage.getItem('temperatureMode');
     
@@ -23,6 +25,8 @@
         currentMode.classList.remove('current-mode');
         changeTemperatureMode();
         updateCurrentMode();
+
+        changeTemperatureText();
     });
 })();
 
