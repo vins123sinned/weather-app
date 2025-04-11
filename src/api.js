@@ -20,8 +20,8 @@ export async function setLocationData(locationName) {
             date: day.datetime,
             icon: day.icon,
             conditions: day.conditions,
-            tempmax: day.tempmax,
-            tempmin: day.tempmin,
+            maxTemp: day.tempmax,
+            minTemp: day.tempmin,
         });
     }
 
