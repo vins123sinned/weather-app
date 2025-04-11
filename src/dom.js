@@ -1,8 +1,12 @@
 import { locationData } from "./api.js";
 import { format, parseISO } from 'date-fns';
 
-export function showInitialLocation() {
+export function displayLocationData() {
     const weatherObject = document.querySelector('.weather-icon');
+    const forecast = document.querySelector('.forecast');
+
+    // if there is existing forecast, clear it first
+    if (forecast.innerHTML) forecast.replaceChildren();
 
     populateDateHeading();
     setWeatherIcon(weatherObject, locationData.currentDay.icon);
@@ -83,7 +87,6 @@ function formatTemperature(temperature) {
 
 export function changeTemperatureText() {
     const currentTemperature = document.querySelector('.current-temperature');
-    const dayTemperatures = document.querySelectorAll('.day-temperature');
     
     currentTemperature.textContent = `${formatTemperature(locationData.currentDay.temp)} ${locationData.currentDay.conditions}`;
     for (const day of locationData.forecast) {
@@ -95,6 +98,3 @@ export function changeTemperatureText() {
         minTemp.textContent = formatTemperature(day.minTemp);
     }
 }
-
-// don't forget to refresh when getting new location!
-// could also do refresh button (refreshing in general);

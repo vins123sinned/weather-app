@@ -39,6 +39,15 @@ header {
     outline: 2px solid #0077b6;
 }
 
+.search-container:has(.invalid:focus) {
+    border: none;
+    outline: 2px dashed #c1121f;
+}
+
+.search-container:has(.invalid) {
+    border: 2px dashed #c1121f;
+}
+
 .search-label {
     display: none;
 }
@@ -50,17 +59,25 @@ header {
     height: 1.5rem;
 }
 
+.invalid::placeholder {
+    color: #c1121f;
+}
+
 .search-input:focus {
     outline: none;
 }
 
-.search-container .material-symbols-outlined {
+.search-icon {
     font-variation-settings: 
     'wght' 200;
 }
 
-.search-container .material-symbols-outlined:hover {
+.search-icon:hover {
     cursor: pointer;
+}
+
+.invalid + .search-icon {
+    color: #c1121f;
 }
 
 .temperature-mode {
