@@ -39,6 +39,8 @@ export async function setLocationData(locationName) {
                 temp: location.currentConditions.temp,
             },
             forecast: days,
+            latitude: location.latitude,
+            longitude: location.longitude,
         })
     );
     

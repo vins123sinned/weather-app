@@ -1,13 +1,16 @@
 import { locationData } from "./api.js";
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, isAfter, isBefore } from 'date-fns';
+import SunCalc from 'suncalc';
 
 export function displayLocationData() {
     const weatherObject = document.querySelector('.weather-icon');
     const forecast = document.querySelector('.forecast');
 
-    // if there is existing forecast, clear it first
+    // clean before new display (if applicable)
     if (forecast.innerHTML) forecast.replaceChildren();
+    document.body.className = '';
 
+    setWebsiteBackground(locationData.currentDay.icon);
     populateDateHeading();
     setWeatherIcon(weatherObject, locationData.currentDay.icon);
     populateOverview();
@@ -26,6 +29,37 @@ function populateDateHeading() {
 async function setWeatherIcon(weatherObject, icon) {
     const svgUrl = await import(`./assets/${icon}.svg`);
     weatherObject.data = svgUrl.default;
+}
+
+async function setWebsiteBackground(icon) {
+    // T is optional, but gives more consistency across browsers
+    const date = new Date(`${locationData.currentDay.date}T${locationData.currentDay.datetime}`);
+    const {sunrise, sunset} = SunCalc.getTimes(date, locationData.latitude, locationData.longitude);
+
+    switch (icon) {
+        case 'partly-cloudy-day':
+        case 'clear-day':
+            document.body.classList.add('day');
+            break;
+        case 'partly-cloudy-night':
+        case 'clear-night':
+            document.body.classList.add('night');
+            break;
+        case 'cloudy':
+        case 'fog':
+            document.body.classList.add('cloudy-fog');
+            break;
+        case 'wind':
+        case 'rain':
+        case 'snow':
+            if (isAfter(date, sunrise) && isBefore(date, sunset)) {
+                // it is daytime!
+                document.body.classList.add('day');
+            } else {
+                document.body.classList.add('night');
+            }
+            break;
+    }
 }
 
 function populateOverview() {
