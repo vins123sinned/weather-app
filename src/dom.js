@@ -1,4 +1,4 @@
-import { locationData } from "./api.js";
+import { locationData } from './api';
 import { format, parseISO, isAfter, isBefore } from 'date-fns';
 import SunCalc from 'suncalc';
 

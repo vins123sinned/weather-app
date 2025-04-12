@@ -69,5 +69,3 @@ function clearSearchError(searchInput) {
     searchInput.disabled = false;
     searchInput.focus();
 }
-
-displayLocationData();

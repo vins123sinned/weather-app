@@ -1,14 +1,18 @@
+import { displayLocationData } from "./dom.js";
+
 export let locationData;
 
-(function initializeLocationData() {
+(async function initializeLocationData() {
     const data = localStorage.getItem('locationData');
     
-    if (!data) return setLocationData('las-vegas');
+    if (!data) {
+        await setLocationData('las-vegas');
+    } else {
+        await setLocationVar();
+    }
 
-    setLocationVar();
+    displayLocationData();
 })();
-
-//fix name (e.g jeju city)
 
 export async function setLocationData(locationName) {
     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${locationName}/next7days?key=G5YF7NL3UB3T5NVFAGGZH9GMN`, {mode: 'cors'});
@@ -47,8 +51,10 @@ export async function setLocationData(locationName) {
     setLocationVar();
 }
 
-function setLocationVar() {
+async function setLocationVar() {
     const data = localStorage.getItem('locationData');
-    locationData = JSON.parse(data);
+    // awaiting here fixes the bug of locationData being 
+    // undefined when displayLocationData is invoked!
+    locationData = await JSON.parse(data);
 }
 
